@@ -13,7 +13,7 @@ function ProfilScreen() {
 
 const Tab = createBottomTabNavigator();
 
-function BottomNav() {
+function Navigation() {
   return (
     <NavigationContainer>
       <Tab.Navigator
@@ -25,6 +25,10 @@ function BottomNav() {
               iconName = "home";
             } else if (route.name == "Profile") {
               iconName = "person-circle";
+            } else if (route.name == "Search") {
+              iconName = "search";
+            } else if (route.name == "Favoris") {
+              iconName = "heart";
             }
             if (iconName) {
               return <Ionicons name={iconName} size={25} color={"black"} />;
@@ -34,7 +38,9 @@ function BottomNav() {
           },
         })}
       >
-        <Tab.Screen name="Budget" component={BudgetScreen} />
+        <Tab.Screen name="Home" component={BudgetScreen} />
+        <Tab.Screen name="Search" component={ProfilScreen} />
+        <Tab.Screen name="Favoris" component={ProfilScreen} />
         <Tab.Screen name="Profile" component={ProfilScreen} />
         {/* <Tab.Screen
           name="PreRegisteredAddOverlay"
@@ -46,4 +52,4 @@ function BottomNav() {
   );
 }
 
-export default BottomNav;
+export default Navigation;
