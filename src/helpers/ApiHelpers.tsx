@@ -31,7 +31,7 @@ export default async function ApiHelper(
 export async function ApiLoginHelper(body: string): Promise<any> {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
-  return await fetch(`${backendUrl}/login`, {
+  return await fetch(`${backendUrl}/api/login`, {
     method: "POST",
     body: body,
     headers: {
@@ -44,7 +44,7 @@ export async function ApiLoginHelper(body: string): Promise<any> {
 export async function ApiRegisterHelper(body: string): Promise<any> {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
-  return await fetch(`${backendUrl}/users`, {
+  return await fetch(`${backendUrl}/api/register`, {
     method: "POST",
     body: body,
     headers: {
