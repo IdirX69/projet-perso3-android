@@ -40,19 +40,19 @@ const RegisterPage = () => {
     }
   };
   return (
-    <View style={{ backgroundColor: "#010D18" }}>
+    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
       <Text>RegisterPage</Text>
-      <View>
+      <View style={{ marginBottom: 50 }}>
         <Image
           style={styles.img}
           source={require("../../assets/img/loginImg.jpeg")}
         />
         <Image
           style={styles.logo}
-          source={require("../../assets/img/logo.svg")}
+          source={require("../../assets/img/logoOrigins.png")}
         />
       </View>
-      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Prenom</Text>
         <TextInput
           autoCorrect={false}
@@ -61,7 +61,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Nom</Text>
         <TextInput
           autoCorrect={false}
@@ -70,7 +70,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Email</Text>
         <TextInput
           autoCorrect={false}
@@ -80,7 +80,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Mot de passe</Text>
         <TextInput
           autoCorrect={false}
@@ -91,7 +91,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Confirmer mot de passe</Text>
         <TextInput
           autoCorrect={false}
@@ -121,42 +121,44 @@ const RegisterPage = () => {
 const styles = StyleSheet.create({
   text: {
     fontWeight: "600",
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 14,
+    marginBottom: 5,
     color: "white",
   },
   img: {
     padding: 0,
     margin: 0,
     width: "100%",
-    height: 220,
+    height: 210,
+    resizeMode: "cover",
   },
   logo: {
     position: "absolute",
     width: "30%",
     height: 100,
-    bottom: -20,
+    bottom: -50,
     alignSelf: "center",
     borderRadius: 10,
-    backgroundColor: "white",
+    backgroundColor: "#010D18",
   },
   inputText: {
     height: 40,
     paddingHorizontal: 16,
+    backgroundColor: "#012748",
     borderRadius: 10,
     borderWidth: 1,
     color: "white",
     borderColor: "#006DCE",
-    marginBottom: 10,
+    marginBottom: 5,
   },
   button: {
     backgroundColor: "#006DCE",
     height: 50,
-    marginBottom: 20,
+    marginBottom: 15,
     justifyContent: "center",
-    marginHorizontal: 80,
+    marginHorizontal: 100,
     borderRadius: 10,
-    marginTop: 10,
+    marginTop: 15,
   },
 });
 
