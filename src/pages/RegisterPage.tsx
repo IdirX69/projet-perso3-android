@@ -1,6 +1,7 @@
 import {
   View,
   Text,
+  Image,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -39,9 +40,19 @@ const RegisterPage = () => {
     }
   };
   return (
-    <View style={{ marginTop: 50, margin: 20 }}>
+    <View style={{ backgroundColor: "#010D18" }}>
       <Text>RegisterPage</Text>
-      <View style={{ marginHorizontal: 24 }}>
+      <View>
+        <Image
+          style={styles.img}
+          source={require("../../assets/img/loginImg.jpeg")}
+        />
+        <Image
+          style={styles.logo}
+          source={require("../../assets/img/logo.svg")}
+        />
+      </View>
+      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
         <Text style={styles.text}>Prenom</Text>
         <TextInput
           autoCorrect={false}
@@ -50,7 +61,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
         <Text style={styles.text}>Nom</Text>
         <TextInput
           autoCorrect={false}
@@ -59,7 +70,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
         <Text style={styles.text}>Email</Text>
         <TextInput
           autoCorrect={false}
@@ -69,7 +80,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
         <Text style={styles.text}>Mot de passe</Text>
         <TextInput
           autoCorrect={false}
@@ -80,7 +91,7 @@ const RegisterPage = () => {
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 50, marginTop: 10 }}>
         <Text style={styles.text}>Confirmer mot de passe</Text>
         <TextInput
           autoCorrect={false}
@@ -98,7 +109,7 @@ const RegisterPage = () => {
             fontWeight: "600",
             fontSize: 16,
             textAlign: "center",
-            color: "#8D00FB",
+            color: "white",
           }}
         >
           Inscription
@@ -112,24 +123,40 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 16,
     marginBottom: 10,
+    color: "white",
+  },
+  img: {
+    padding: 0,
+    margin: 0,
+    width: "100%",
+    height: 220,
+  },
+  logo: {
+    position: "absolute",
+    width: "30%",
+    height: 100,
+    bottom: -20,
+    alignSelf: "center",
+    borderRadius: 10,
+    backgroundColor: "white",
   },
   inputText: {
-    height: 48,
+    height: 40,
     paddingHorizontal: 16,
-    borderRadius: 24,
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#000",
-    marginBottom: 20,
+    color: "white",
+    borderColor: "#006DCE",
+    marginBottom: 10,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#006DCE",
     height: 50,
     marginBottom: 20,
     justifyContent: "center",
-    marginHorizontal: 50,
-    borderRadius: 24,
-    borderColor: "#8D00FB",
-    borderWidth: 1,
+    marginHorizontal: 80,
+    borderRadius: 10,
+    marginTop: 10,
   },
 });
 
