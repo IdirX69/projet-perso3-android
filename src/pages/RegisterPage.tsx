@@ -1,69 +1,115 @@
 import {
   View,
   Text,
+  Image,
   TextInput,
   StyleSheet,
   TouchableOpacity,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { ApiRegisterHelper } from "../helpers/ApiHelpers";
 
 const RegisterPage = () => {
-  // ApiRegisterHelper()
+  const [firstname, setFirstname] = useState("John");
+  const [lastname, setLastname] = useState("Doe");
+  const [email, setEmail] = useState("johndoe@mail.com");
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const postData = {
+    firstname,
+    lastname,
+    email,
+    password,
+  };
+  const handleSubmit = async () => {
+    if (!firstname || !lastname || !email || !password) {
+      console.log("erreur 1");
+
+      return;
+    }
+    try {
+      const response = await ApiRegisterHelper(JSON.stringify(postData));
+
+      if (!response.ok) {
+        console.log("erreur 2 !ok");
+      } else {
+        console.log("enregistrement");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
-    <View style={{ marginTop: 50, margin: 20 }}>
+    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
       <Text>RegisterPage</Text>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginBottom: 50 }}>
+        <Image
+          style={styles.img}
+          source={require("../../assets/img/loginImg.jpeg")}
+        />
+        <Image
+          style={styles.logo}
+          source={require("../../assets/img/logoOrigins.png")}
+        />
+      </View>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Prenom</Text>
         <TextInput
           autoCorrect={false}
-          secureTextEntry={true}
+          value={firstname}
+          onChangeText={(text) => setFirstname(text)}
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Nom</Text>
         <TextInput
           autoCorrect={false}
-          secureTextEntry={true}
+          value={lastname}
+          onChangeText={(text) => setLastname(text)}
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Email</Text>
         <TextInput
           autoCorrect={false}
           autoComplete="email"
-          secureTextEntry={true}
+          value={email}
+          onChangeText={(text) => setEmail(text)}
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Mot de passe</Text>
         <TextInput
           autoCorrect={false}
           autoComplete="password"
           secureTextEntry={true}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
           style={styles.inputText}
         />
       </View>
-      <View style={{ marginHorizontal: 24 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
         <Text style={styles.text}>Confirmer mot de passe</Text>
         <TextInput
           autoCorrect={false}
           autoComplete="password"
           secureTextEntry={true}
+          value={passwordConfirm}
+          onChangeText={(text) => setPasswordConfirm(text)}
           style={styles.inputText}
         />
       </View>
 
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity onPress={handleSubmit} style={styles.button}>
         <Text
           style={{
             fontWeight: "600",
             fontSize: 16,
             textAlign: "center",
-            color: "#8D00FB",
+            color: "white",
           }}
         >
           Inscription
@@ -75,26 +121,44 @@ const RegisterPage = () => {
 const styles = StyleSheet.create({
   text: {
     fontWeight: "600",
-    fontSize: 16,
-    marginBottom: 10,
+    fontSize: 14,
+    marginBottom: 5,
+    color: "white",
+  },
+  img: {
+    padding: 0,
+    margin: 0,
+    width: "100%",
+    height: 210,
+    resizeMode: "cover",
+  },
+  logo: {
+    position: "absolute",
+    width: "30%",
+    height: 100,
+    bottom: -50,
+    alignSelf: "center",
+    borderRadius: 10,
+    backgroundColor: "#010D18",
   },
   inputText: {
-    height: 48,
+    height: 40,
     paddingHorizontal: 16,
-    borderRadius: 24,
+    backgroundColor: "#012748",
+    borderRadius: 10,
     borderWidth: 1,
-    borderColor: "#000",
-    marginBottom: 20,
+    color: "white",
+    borderColor: "#006DCE",
+    marginBottom: 5,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#006DCE",
     height: 50,
-    marginBottom: 20,
+    marginBottom: 15,
     justifyContent: "center",
-    marginHorizontal: 50,
-    borderRadius: 24,
-    borderColor: "#8D00FB",
-    borderWidth: 1,
+    marginHorizontal: 100,
+    borderRadius: 10,
+    marginTop: 15,
   },
 });
 
