@@ -2,6 +2,8 @@ import * as React from "react";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import RegisterPage from "./src/pages/RegisterPage";
+import LoginPage from "./src/pages/LoginPage";
 
 function BudgetScreen() {
   return <></>;
@@ -40,8 +42,8 @@ function Navigation() {
       >
         <Tab.Screen name="Home" component={BudgetScreen} />
         <Tab.Screen name="Search" component={ProfilScreen} />
-        <Tab.Screen name="Favoris" component={ProfilScreen} />
-        <Tab.Screen name="Profile" component={ProfilScreen} />
+        <Tab.Screen name="Favoris" component={LoginPage} />
+        <Tab.Screen name="Profile" component={RegisterPage} />
         {/* <Tab.Screen
           name="PreRegisteredAddOverlay"
           component={PreRegisteredAddOverlay}
