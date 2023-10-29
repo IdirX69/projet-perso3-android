@@ -33,7 +33,7 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {dataToken.token ? (
+      {dataToken?.token ? (
         <LoginPage />
       ) : (
         <Tab.Navigator
