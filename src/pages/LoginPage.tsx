@@ -7,15 +7,18 @@ import jwtDecode from "jwt-decode";
 
 const LoginPage = () => {
   const { setUser } = useUser();
+  const { user } = useUser();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const postData = {
+    email,
+    password,
+  };
 
   const handleSubmit = async () => {
     if (email && password) {
       try {
-        const response = await ApiLoginHelper(
-          JSON.stringify({ email, password })
-        );
+        const response = await ApiLoginHelper(JSON.stringify(postData));
         if (!response.ok) {
           throw new Error("Erreur de connexion");
         } else {
@@ -30,6 +33,7 @@ const LoginPage = () => {
             JSON.stringify({ user: decoded.sub, token: result.token })
           );
         }
+        console.log(user);
       } catch (error) {
         console.error(error);
       }
