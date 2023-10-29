@@ -4,6 +4,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { useUser } from "../Context/UserContext";
@@ -11,16 +12,24 @@ import { ApiLoginHelper } from "../helpers/ApiHelpers";
 import * as SecureStore from "expo-secure-store";
 import jwtDecode from "jwt-decode";
 import { Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginPage = () => {
   const { setUser } = useUser();
   const { user } = useUser();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const postData = {
     email,
     password,
   };
+
+  const RegisterButton = ({ onPress, buttonStyle }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.button, buttonStyle]}>
+      <Text style={styles.button}>Register</Text>
+    </TouchableOpacity>
+  );
 
   const handleSubmit = async () => {
     if (email && password) {
@@ -104,16 +113,11 @@ const LoginPage = () => {
         >
           Vous n'avez pas de compte ?
         </Text>
-        <Text
-          style={{
-            margin: 20,
-            fontSize: 16,
-            textAlign: "center",
-            color: "white",
-          }}
-        >
-          S'inscrire
-        </Text>
+        <RegisterButton
+          style={styles.button}
+          onPress={() => navigation.navigate("Register")}
+        />
+
         <Text
           style={{
             fontSize: 16,

@@ -33,45 +33,41 @@ function Navigation() {
 
   return (
     <NavigationContainer>
-      {dataToken?.token ? (
-        <LoginPage />
-      ) : (
-        <Tab.Navigator
-          screenOptions={({ route }) => ({
-            headerShown: false,
-            tabBarIcon: ({ focused, color, size }) => {
-              let iconName;
-              if (route.name == "Home") {
-                iconName = "home";
-              } else if (route.name == "Profile") {
-                iconName = "person-circle";
-              } else if (route.name == "Search") {
-                iconName = "search";
-              } else if (route.name == "Favoris") {
-                iconName = "heart";
-              }
-              if (iconName) {
-                return <Ionicons name={iconName} size={25} color={"black"} />;
-              } else {
-                return null;
-              }
-            },
-          })}
-        >
-          <>
-            <Tab.Screen name="Home" component={BudgetScreen} />
-            <Tab.Screen name="Search" component={ProfilScreen} />
-            <Tab.Screen name="Favoris" component={LoginPage} />
-            <Tab.Screen name="Profile" component={RegisterPage} />
-          </>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          headerShown: false,
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name == "Home") {
+              iconName = "home";
+            } else if (route.name == "Profile") {
+              iconName = "person-circle";
+            } else if (route.name == "Search") {
+              iconName = "search";
+            } else if (route.name == "Favoris") {
+              iconName = "heart";
+            }
+            if (iconName) {
+              return <Ionicons name={iconName} size={25} color={"black"} />;
+            } else {
+              return null;
+            }
+          },
+        })}
+      >
+        <>
+          <Tab.Screen name="Home" component={BudgetScreen} />
+          <Tab.Screen name="Search" component={ProfilScreen} />
+          <Tab.Screen name="Favoris" component={LoginPage} />
+          <Tab.Screen name="Profile" component={ProfilScreen} />
+        </>
 
-          {/* <Tab.Screen
-        name="PreRegisteredAddOverlay"
-        component={PreRegisteredAddOverlay}
-        options={{ tabBarButton: () => null }}
-      /> */}
-        </Tab.Navigator>
-      )}
+        <Tab.Screen
+          name="Register"
+          component={RegisterPage}
+          options={{ tabBarButton: () => null }}
+        />
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
