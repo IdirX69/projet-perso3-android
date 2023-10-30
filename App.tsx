@@ -1,15 +1,11 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Navigation from "./Navigation";
+import { UserProvider } from "./src/Context/UserContext";
 export default function App() {
-  return <Navigation />;
+  return (
+    <UserProvider>
+      <Navigation />
+    </UserProvider>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

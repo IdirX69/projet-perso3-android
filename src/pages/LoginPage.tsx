@@ -1,21 +1,40 @@
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+} from "react-native";
 import React, { useState } from "react";
 import { useUser } from "../Context/UserContext";
 import { ApiLoginHelper } from "../helpers/ApiHelpers";
 import * as SecureStore from "expo-secure-store";
 import jwtDecode from "jwt-decode";
+import { Text } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 const LoginPage = () => {
   const { setUser } = useUser();
+  const { user } = useUser();
+  const navigation = useNavigation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const postData = {
+    email,
+    password,
+  };
+
+  const RegisterButton = ({ onPress, buttonStyle }) => (
+    <TouchableOpacity onPress={onPress} style={[styles.button, buttonStyle]}>
+      <Text style={styles.button}>Register</Text>
+    </TouchableOpacity>
+  );
 
   const handleSubmit = async () => {
     if (email && password) {
       try {
-        const response = await ApiLoginHelper(
-          JSON.stringify({ email, password })
-        );
+        const response = await ApiLoginHelper(JSON.stringify(postData));
         if (!response.ok) {
           throw new Error("Erreur de connexion");
         } else {
@@ -30,6 +49,7 @@ const LoginPage = () => {
             JSON.stringify({ user: decoded.sub, token: result.token })
           );
         }
+        console.log(user);
       } catch (error) {
         console.error(error);
       }
@@ -37,72 +57,121 @@ const LoginPage = () => {
   };
 
   return (
-    <View>
-      <Text>LoginPage</Text>
+    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
       <View style={{ marginTop: 15 }}>
-        <Text style={styles.text}>Email</Text>
-        <TextInput
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          autoCorrect={false}
-          autoComplete="email"
-          keyboardType="email-address"
-          style={styles.input}
-        />
+        <View style={{ marginBottom: 50 }}>
+          <Image
+            style={styles.img}
+            source={require("../../assets/img/loginImg.jpeg")}
+          />
+          <Image
+            style={styles.logo}
+            source={require("../../assets/img/logoOrigins.png")}
+          />
+        </View>
+        <View style={{ marginHorizontal: 65, marginTop: 50 }}>
+          <Text style={styles.text}>Email</Text>
+          <TextInput
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            autoCorrect={false}
+            autoComplete="email"
+            keyboardType="email-address"
+            style={styles.inputText}
+          />
+          <Text style={styles.text}>Password</Text>
+          <TextInput
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            autoCorrect={false}
+            autoComplete="password"
+            secureTextEntry={true}
+            style={styles.inputText}
+          />
+        </View>
       </View>
-
-      <View style={{ marginBottom: 15 }}>
-        <Text style={styles.text}>Password</Text>
-        <TextInput
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          autoCorrect={false}
-          autoComplete="password"
-          secureTextEntry={true}
-          style={styles.input}
-        />
-      </View>
-
+      <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 16,
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          Se connecter
+        </Text>
+      </TouchableOpacity>
       <View>
-        <Button title="Connecter" onPress={handleSubmit} />
+        <Text
+          style={{
+            fontWeight: "600",
+            fontSize: 16,
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          Vous n'avez pas de compte ?
+        </Text>
+        <RegisterButton
+          style={styles.button}
+          onPress={() => navigation.navigate("Register")}
+        />
+
+        <Text
+          style={{
+            fontSize: 16,
+            textAlign: "center",
+            color: "white",
+          }}
+        >
+          Mot de passe oubliée ?
+        </Text>
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 15,
-  },
   text: {
-    color: "black",
-    fontWeight: "bold",
-    fontSize: 18,
-    marginTop: 15,
+    fontWeight: "600",
+    fontSize: 14,
+    marginBottom: 5,
+    color: "white",
   },
-  input: {
-    width: 300,
-    height: 44,
-    padding: 10,
-    marginTop: 5,
-    marginBottom: 10,
-    backgroundColor: "white",
-    borderColor: "black",
+  img: {
+    padding: 0,
+    margin: 0,
+    width: "100%",
+    height: 210,
+    resizeMode: "cover",
+  },
+  logo: {
+    position: "absolute",
+    width: "30%",
+    height: 100,
+    bottom: -50,
+    alignSelf: "center",
+    borderRadius: 10,
+    backgroundColor: "#010D18",
+  },
+  inputText: {
+    height: 40,
+    paddingHorizontal: 16,
+    backgroundColor: "#012748",
+    borderRadius: 10,
     borderWidth: 1,
-    borderRadius: 25,
+    color: "white",
+    borderColor: "#006DCE",
+    marginBottom: 5,
   },
   button: {
-    padding: 10,
+    backgroundColor: "#006DCE",
+    height: 50,
+    marginBottom: 15,
+    justifyContent: "center",
+    marginHorizontal: 100,
+    borderRadius: 10,
     marginTop: 15,
-    flexDirection: "row",
-    width: "65%",
-    backgroundColor: "white",
-    borderColor: "#8D00FB",
-    borderWidth: 2,
-    borderRadius: 25,
-    alignItems: "center",
-    justifyContent: "space-evenly",
   },
 });
 
