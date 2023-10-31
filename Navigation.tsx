@@ -37,9 +37,11 @@ function Navigation() {
     <>
       {dataToken?.token ? (
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator screenOptions={{ headerShown: true }}>
             <Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Register" component={RegisterPage} />
+            <Stack.Group screenOptions={{ presentation: "modal" }}>
+              <Stack.Screen name="Register" component={RegisterPage} />
+            </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
@@ -73,11 +75,11 @@ function Navigation() {
               <Tab.Screen name="Profile" component={ProfilScreen} />
             </>
 
-            <Tab.Screen
+            {/* <Tab.Screen
               name="Register"
               component={RegisterPage}
               options={{ tabBarButton: () => null }}
-            />
+            /> */}
           </Tab.Navigator>
         </NavigationContainer>
       )}
