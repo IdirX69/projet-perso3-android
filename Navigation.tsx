@@ -8,10 +8,7 @@ import LoginPage from "./src/pages/LoginPage";
 import * as SecureStore from "expo-secure-store";
 import { useUser } from "./src/Context/UserContext";
 import { createStackNavigator } from "@react-navigation/stack";
-
-function BudgetScreen() {
-  return <></>;
-}
+import Home from "./src/pages/Home";
 
 function ProfilScreen() {
   return <></>;
@@ -35,7 +32,7 @@ function Navigation() {
 
   return (
     <>
-      {dataToken?.token ? (
+      {!dataToken?.token ? (
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: true }}>
             <Stack.Screen name="Login" component={LoginPage} />
@@ -69,7 +66,7 @@ function Navigation() {
             })}
           >
             <>
-              <Tab.Screen name="Home" component={BudgetScreen} />
+              <Tab.Screen name="Home" component={Home} />
               <Tab.Screen name="Search" component={ProfilScreen} />
               <Tab.Screen name="Favoris" component={LoginPage} />
               <Tab.Screen name="Profile" component={ProfilScreen} />

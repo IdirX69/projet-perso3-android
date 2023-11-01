@@ -47,7 +47,6 @@ const RegisterPage = () => {
         overflow: "visible",
       }}
     >
-      <Text>RegisterPage</Text>
       <View>
         <Image
           style={styles.img}
@@ -58,7 +57,7 @@ const RegisterPage = () => {
           source={require("../../assets/img/logoOrigins.png")}
         />
       </View>
-      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 70 }}>
         <Text style={styles.text}>Prenom</Text>
         <TextInput
           autoCorrect={false}
