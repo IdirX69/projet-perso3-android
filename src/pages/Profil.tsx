@@ -24,7 +24,7 @@ export default function Profil() {
       <View style={{ marginBottom: 50 }}>
         <Image
           style={styles.img}
-          source={require("../../assets/img/loginImg.jpeg")}
+          source={require("../../assets/img/profilback.png")}
         />
         <Image
           style={styles.logo}
