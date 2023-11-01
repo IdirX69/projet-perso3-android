@@ -9,6 +9,7 @@ import * as SecureStore from "expo-secure-store";
 import { useUser } from "./src/Context/UserContext";
 import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/pages/Home";
+import Profil from "./src/pages/Profil";
 
 function ProfilScreen() {
   return <></>;
@@ -69,7 +70,7 @@ function Navigation() {
               <Tab.Screen name="Home" component={Home} />
               <Tab.Screen name="Search" component={ProfilScreen} />
               <Tab.Screen name="Favoris" component={LoginPage} />
-              <Tab.Screen name="Profile" component={ProfilScreen} />
+              <Tab.Screen name="Profile" component={Profil} />
             </>
 
             {/* <Tab.Screen
