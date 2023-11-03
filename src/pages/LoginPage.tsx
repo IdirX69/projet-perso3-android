@@ -26,8 +26,17 @@ const LoginPage = () => {
   };
 
   const RegisterButton = ({ onPress, buttonStyle }) => (
-    <TouchableOpacity onPress={onPress} style={[styles.button, buttonStyle]}>
-      <Text style={styles.button}>Register</Text>
+    <TouchableOpacity onPress={onPress} style={[styles.text, buttonStyle]}>
+      <Text
+        style={{
+          textAlign: "center",
+          color: "white",
+          margin: 15,
+          textDecorationLine: "underline",
+        }}
+      >
+        S'inscrire
+      </Text>
     </TouchableOpacity>
   );
 
@@ -114,7 +123,7 @@ const LoginPage = () => {
           Vous n'avez pas de compte ?
         </Text>
         <RegisterButton
-          style={styles.button}
+          style={styles.text}
           onPress={() => navigation.navigate("Register")}
         />
 

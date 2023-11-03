@@ -8,10 +8,9 @@ import LoginPage from "./src/pages/LoginPage";
 import * as SecureStore from "expo-secure-store";
 import { useUser } from "./src/Context/UserContext";
 import { createStackNavigator } from "@react-navigation/stack";
-
-function BudgetScreen() {
-  return <></>;
-}
+import Home from "./src/pages/Home";
+import Profil from "./src/pages/Profil";
+import { Image } from "react-native";
 
 function ProfilScreen() {
   return <></>;
@@ -33,20 +32,35 @@ function Navigation() {
   }, [user]);
   console.log(dataToken);
 
+  function LogoTitle() {
+    return (
+      <Image
+        style={{ width: 140, height: 70 }}
+        source={require("./assets/img/digital.png")}
+      />
+    );
+  }
+
   return (
     <>
-      {dataToken?.token ? (
+      {!dataToken?.token ? (
         <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
+          <Stack.Navigator screenOptions={{ headerShown: true }}>
             <Stack.Screen name="Login" component={LoginPage} />
-            <Stack.Screen name="Register" component={RegisterPage} />
+            <Stack.Group screenOptions={{ presentation: "modal" }}>
+              <Stack.Screen name="Register" component={RegisterPage} />
+            </Stack.Group>
           </Stack.Navigator>
         </NavigationContainer>
       ) : (
         <NavigationContainer>
           <Tab.Navigator
             screenOptions={({ route }) => ({
-              headerShown: false,
+              headerShown: true,
+              headerStyle: {
+                height: 110,
+                backgroundColor: "#012748",
+              },
               tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
                 if (route.name == "Home") {
@@ -67,17 +81,21 @@ function Navigation() {
             })}
           >
             <>
-              <Tab.Screen name="Home" component={BudgetScreen} />
+              <Tab.Screen name="Home" component={Home} />
               <Tab.Screen name="Search" component={ProfilScreen} />
-              <Tab.Screen name="Favoris" component={LoginPage} />
-              <Tab.Screen name="Profile" component={ProfilScreen} />
+              <Tab.Screen name="Favoris" component={ProfilScreen} />
+              <Tab.Screen
+                name="Profile"
+                component={Profil}
+                options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+              />
             </>
 
-            <Tab.Screen
+            {/* <Tab.Screen
               name="Register"
               component={RegisterPage}
               options={{ tabBarButton: () => null }}
-            />
+            /> */}
           </Tab.Navigator>
         </NavigationContainer>
       )}
