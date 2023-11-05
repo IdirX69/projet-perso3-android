@@ -40,9 +40,14 @@ const RegisterPage = () => {
     }
   };
   return (
-    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
-      <Text>RegisterPage</Text>
-      <View style={{ marginBottom: 50 }}>
+    <View
+      style={{
+        backgroundColor: "#010D18",
+        height: "100%",
+        overflow: "visible",
+      }}
+    >
+      <View>
         <Image
           style={styles.img}
           source={require("../../assets/img/loginImg.jpeg")}
@@ -52,7 +57,7 @@ const RegisterPage = () => {
           source={require("../../assets/img/logoOrigins.png")}
         />
       </View>
-      <View style={{ marginHorizontal: 65, marginTop: 10 }}>
+      <View style={{ marginHorizontal: 65, marginTop: 70 }}>
         <Text style={styles.text}>Prenom</Text>
         <TextInput
           autoCorrect={false}
