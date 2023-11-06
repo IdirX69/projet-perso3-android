@@ -1,4 +1,4 @@
-import { View, Text, Image, StyleSheet } from "react-native";
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import ApiHelper from "../helpers/ApiHelpers";
@@ -7,7 +7,8 @@ export default function Profil() {
   const { user } = useUser();
 
   const [userInfo, setUserInfo] = useState({});
-
+  console.log(user);
+  const { firstname, lastname, email } = userInfo;
   useEffect(() => {
     ApiHelper(`/api/users/${JSON.stringify(user.sub)}`, "GET")
       .then((response) => response.json())
@@ -31,16 +32,31 @@ export default function Profil() {
           source={require("../../assets/img/logoOrigins.png")}
         />
       </View>
-      <Text>{userInfo.firstname}</Text>
+      <Text style={styles.text}>{firstname + " " + lastname}</Text>
+      <View>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.textButton}>Modifier mes information</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button}>
+          <Text style={styles.textButton}>Se déconnecter</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
   text: {
     fontWeight: "600",
-    fontSize: 14,
+    fontSize: 15,
     marginBottom: 5,
     color: "white",
+    textAlign: "center",
+    marginTop: 15,
+  },
+  textButton: {
+    fontSize: 15,
+    color: "white",
+    textAlign: "center",
   },
   img: {
     padding: 0,
