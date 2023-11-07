@@ -9,14 +9,23 @@ import {
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import ApiHelper from "../helpers/ApiHelpers";
+import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
 
 export default function Profil() {
-  const { user } = useUser();
+  const { user, setUser } = useUser();
+  const navigation = useNavigation();
 
   const [userInfo, setUserInfo] = useState({});
   const [editInfo, setEditInfo] = useState(false);
   console.log(user);
   const { firstname, lastname, email } = userInfo;
+
+  const handleLogout = () => {
+    SecureStore.deleteItemAsync("userToken");
+    setUser({});
+    navigation.navigate("Home");
+  };
   useEffect(() => {
     ApiHelper(`/api/users/${JSON.stringify(user.sub)}`, "GET")
       .then((response) => response.json())
@@ -49,7 +58,7 @@ export default function Profil() {
           >
             <Text style={styles.textButton}>Modifier mes information</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity style={styles.button} onPress={handleLogout}>
             <Text style={styles.textButton}>Se déconnecter</Text>
           </TouchableOpacity>
         </View>
