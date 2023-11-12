@@ -105,7 +105,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     borderRadius: 50,
     backgroundColor: "#fff",
-    top: "42%",
-    left: "42%",
+    top: "40%",
+    left: "40%",
+    padding: 10,
   },
 });
