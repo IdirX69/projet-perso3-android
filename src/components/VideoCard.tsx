@@ -1,12 +1,15 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
+import moment from "moment-with-locales-es6";
 import React from "react";
 
 export default function VideoCard({ video }) {
+  const videoDate = (video) =>
+    moment(video.creation_date).locale("fr").fromNow();
   console.log(video);
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
   return (
-    <TouchableOpacity style={styles.imageWrapper} onPress={() => {}}>
+    <View style={styles.imageWrapper} onPress={() => {}}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -19,17 +22,19 @@ export default function VideoCard({ video }) {
               <Text style={[styles.videoName, styles.mediumText]}>
                 {video.name}
               </Text>
-              <Text style={[styles.videoSubtext, styles.mediumText]}>date</Text>
+              <Text style={[styles.videoSubtext, styles.mediumText]}>
+                {videoDate(video)}
+              </Text>
             </View>
-            <TouchableOpacity style={styles.btnPlay} onPress={() => {}}>
+            <View style={styles.btnPlay} onPress={() => {}}>
               {/* play button icon */}
               <Image source={require("../../assets/img/playIcon.png")} />
-            </TouchableOpacity>
+            </View>
           </View>
         </View>
       </View>
-      <Text style={styles.videoTime}>category</Text>
-    </TouchableOpacity>
+      <Text style={styles.videoTime}>{video.category_description}</Text>
+    </View>
   );
 }
 
@@ -54,7 +59,7 @@ const styles = StyleSheet.create({
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "rgba(0, 16, 34, 0.8)",
+    backgroundColor: "rgba(0, 16, 34, 0.5)",
     padding: 2,
     flexDirection: "column",
     alignItems: "flex-end",
