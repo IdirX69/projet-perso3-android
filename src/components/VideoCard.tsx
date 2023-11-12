@@ -1,4 +1,4 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 
 export default function VideoCard({ video }) {
@@ -6,35 +6,106 @@ export default function VideoCard({ video }) {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
   return (
-    <TouchableOpacity
-      style={{ flex: 1, margin: 10 }} // Adjust styling as per your requirements
-      onPress={() => {}}
-    >
-      <View style={{ position: "relative" }}>
+    <TouchableOpacity style={styles.imageWrapper} onPress={() => {}}>
+      <View style={styles.imageContainer}>
         <Image
-          style={{ width: "100%", height: 200 }} // Adjust styling as per your requirements
+          style={styles.image}
           source={{ uri: `${backendUrl}/api/videos/${video.img}` }}
           resizeMode="cover"
         />
-        <View
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.3)", // Adjust the opacity and color as per your requirements
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text style={{ color: "white", fontSize: 18, fontWeight: "bold" }}>
-            {video.name}
-          </Text>
-          <Text style={{ color: "white", fontSize: 16 }}></Text>
+        <View style={styles.imageOverlay}>
+          <View style={styles.videoInfo}>
+            <View style={styles.videoInfoText}>
+              <Text style={[styles.videoName, styles.mediumText]}>
+                {video.name}
+              </Text>
+              <Text style={[styles.videoSubtext, styles.mediumText]}>date</Text>
+            </View>
+            <TouchableOpacity style={styles.btnPlay} onPress={() => {}}>
+              {/* play button icon */}
+              <Image source={require("../../assets/img/playIcon.png")} />
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-      <Text style={{ marginTop: 5 }}>{}</Text>
+      <Text style={styles.videoTime}>category</Text>
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  imageWrapper: {
+    borderRadius: 12,
+    overflow: "hidden",
+    width: "40%",
+    height: "45%",
+    position: "relative",
+    margin: "5%",
+    zIndex: 0,
+    // Add other styles based on media queries for larger screens
+  },
+  imageContainer: {
+    position: "relative",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+    // Add other image styles
+  },
+  imageOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: "rgba(0, 16, 34, 0.8)",
+    padding: 2,
+    flexDirection: "column",
+    alignItems: "flex-end",
+    justifyContent: "flex-end",
+  },
+  videoInfo: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "flex-end",
+    width: "100%",
+    height: "100%",
+  },
+  videoInfoText: {
+    width: "calc(100% - 40)",
+  },
+  videoName: {
+    color: "#fff",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    textAlign: "start",
+  },
+  videoSubtext: {
+    color: "#fff",
+    overflow: "hidden",
+    whiteSpace: "nowrap",
+    textOverflow: "ellipsis",
+    textAlign: "start",
+    opacity: 0.8,
+  },
+  mediumText: {
+    fontSize: 14,
+    lineHeight: 24,
+  },
+  videoTime: {
+    position: "absolute",
+    zIndex: 1,
+    borderRadius: 10,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    backgroundColor: "rgba(139, 156, 163, 0.5)",
+    fontSize: 10,
+    color: "#fff",
+    right: 12,
+    top: 12,
+  },
+  btnPlay: {
+    position: "absolute",
+    borderRadius: 50,
+    backgroundColor: "#fff",
+    top: "42%",
+    left: "42%",
+  },
+});
