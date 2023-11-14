@@ -11,6 +11,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 import Home from "./src/pages/Home";
 import Profil from "./src/pages/Profil";
 import { Image } from "react-native";
+import SearchPage from "./src/pages/SearchPage";
 
 function ProfilScreen() {
   return <></>;
@@ -82,7 +83,7 @@ function Navigation() {
           >
             <>
               <Tab.Screen name="Home" component={Home} />
-              <Tab.Screen name="Search" component={ProfilScreen} />
+              <Tab.Screen name="Search" component={SearchPage} />
               <Tab.Screen name="Favoris" component={ProfilScreen} />
               <Tab.Screen
                 name="Profile"
