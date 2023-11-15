@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import React, { useEffect, useState } from "react";
 import ApiHelper from "../helpers/ApiHelpers";
 import VideoCard from "../components/VideoCard";
@@ -17,10 +17,25 @@ export default function SearchPage() {
       });
   }, []);
   return (
-    <View>
+    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
+      <TextInput placeholder="Recherche" style={styles.searchBar}></TextInput>
       {videos.map((video) => (
-        <VideoCard key={video.id} video={video} />
+        <View>
+          <VideoCard key={video.id} video={video} />
+        </View>
       ))}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  searchBar: {
+    backgroundColor: "white",
+    width: "70%",
+    alignSelf: "center",
+    borderRadius: 10,
+    marginTop: 10,
+    fontSize: 14,
+    padding: 2,
+    paddingHorizontal: 7,
+  },
+});

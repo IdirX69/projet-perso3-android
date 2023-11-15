@@ -85,9 +85,6 @@ const styles = StyleSheet.create({
   videoSubtext: {
     color: "#fff",
     overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    textAlign: "start",
     opacity: 0.8,
   },
   mediumText: {
