@@ -1,7 +1,14 @@
-import { View, Text, TextInput, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import ApiHelper from "../helpers/ApiHelpers";
 import VideoCard from "../components/VideoCard";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SearchPage() {
   const [videos, setVideos] = useState([]);
@@ -17,6 +24,11 @@ export default function SearchPage() {
         console.error("Error when getting videos", error);
       });
   }, []);
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate("Player");
+  };
   return (
     <View style={{ backgroundColor: "#010D18", height: "100%" }}>
       <TextInput
@@ -29,9 +41,9 @@ export default function SearchPage() {
           video.name.toLowerCase().includes(search.toLowerCase())
         )
         .map((video) => (
-          <View>
+          <TouchableOpacity onPress={handlePress}>
             <VideoCard key={video.id} video={video} />
-          </View>
+          </TouchableOpacity>
         ))}
     </View>
   );

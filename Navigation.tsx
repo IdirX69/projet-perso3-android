@@ -12,6 +12,7 @@ import Home from "./src/pages/Home";
 import Profil from "./src/pages/Profil";
 import { Image } from "react-native";
 import SearchPage from "./src/pages/SearchPage";
+import VidePlay from "./src/pages/VidePlay";
 
 function ProfilScreen() {
   return <></>;
@@ -92,11 +93,11 @@ function Navigation() {
               />
             </>
 
-            {/* <Tab.Screen
-              name="Register"
-              component={RegisterPage}
+            <Tab.Screen
+              name="Player"
+              component={VidePlay}
               options={{ tabBarButton: () => null }}
-            /> */}
+            />
           </Tab.Navigator>
         </NavigationContainer>
       )}
