@@ -5,6 +5,7 @@ import VideoCard from "../components/VideoCard";
 
 export default function SearchPage() {
   const [videos, setVideos] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     ApiHelper(`/api/videos`, "GET")
@@ -18,12 +19,20 @@ export default function SearchPage() {
   }, []);
   return (
     <View style={{ backgroundColor: "#010D18", height: "100%" }}>
-      <TextInput placeholder="Recherche" style={styles.searchBar}></TextInput>
-      {videos.map((video) => (
-        <View>
-          <VideoCard key={video.id} video={video} />
-        </View>
-      ))}
+      <TextInput
+        placeholder="Recherche"
+        style={styles.searchBar}
+        onChangeText={(text) => setSearch(text)}
+      ></TextInput>
+      {videos
+        .filter((video) =>
+          video.name.toLowerCase().includes(search.toLowerCase())
+        )
+        .map((video) => (
+          <View>
+            <VideoCard key={video.id} video={video} />
+          </View>
+        ))}
     </View>
   );
 }
