@@ -41,8 +41,8 @@ export default function SearchPage() {
           video.name.toLowerCase().includes(search.toLowerCase())
         )
         .map((video) => (
-          <TouchableOpacity onPress={handlePress}>
-            <VideoCard key={video.id} video={video} />
+          <TouchableOpacity key={video.id} onPress={handlePress}>
+            <VideoCard video={video} />
           </TouchableOpacity>
         ))}
     </View>
