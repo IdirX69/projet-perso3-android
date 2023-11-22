@@ -1,10 +1,4 @@
-import {
-  View,
-  Text,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-} from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import ApiHelper from "../helpers/ApiHelpers";
 import VideoCard from "../components/VideoCard";

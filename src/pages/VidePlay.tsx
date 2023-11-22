@@ -1,12 +1,10 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const VidePlay = () => {
+export default function VidePlay() {
   return (
     <View>
       <Text>VidePlay</Text>
     </View>
   );
-};
-
-export default VidePlay;
+}

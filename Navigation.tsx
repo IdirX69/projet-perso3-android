@@ -13,6 +13,7 @@ import Profil from "./src/pages/Profil";
 import { Image } from "react-native";
 import SearchPage from "./src/pages/SearchPage";
 import VidePlay from "./src/pages/VidePlay";
+import Favorite from "./src/pages/Favorite";
 
 function ProfilScreen() {
   return <></>;
@@ -85,7 +86,7 @@ function Navigation() {
             <>
               <Tab.Screen name="Home" component={Home} />
               <Tab.Screen name="Search" component={SearchPage} />
-              <Tab.Screen name="Favoris" component={ProfilScreen} />
+              <Tab.Screen name="Favoris" component={Favorite} />
               <Tab.Screen
                 name="Profile"
                 component={Profil}
