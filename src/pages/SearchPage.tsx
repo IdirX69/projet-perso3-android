@@ -18,11 +18,7 @@ export default function SearchPage() {
         console.error("Error when getting videos", error);
       });
   }, []);
-  const navigation = useNavigation();
 
-  const handlePress = () => {
-    navigation.navigate("Player");
-  };
   return (
     <View style={{ backgroundColor: "#010D18", height: "100%" }}>
       <TextInput
@@ -35,9 +31,7 @@ export default function SearchPage() {
           video.name.toLowerCase().includes(search.toLowerCase())
         )
         .map((video) => (
-          <TouchableOpacity key={video.id} onPress={handlePress}>
-            <VideoCard video={video} />
-          </TouchableOpacity>
+          <VideoCard key={video.id} video={video} />
         ))}
     </View>
   );

@@ -1,22 +1,39 @@
 import * as React from "react";
 import { View, StyleSheet, Button } from "react-native";
 import { Video, ResizeMode } from "expo-av";
+import { useCurrentVideosContext } from "../Context/VideoContext";
+import ApiHelper from "../helpers/ApiHelpers";
 
 export default function App() {
-  const video = React.useRef(null);
-  const [status, setStatus] = React.useState({});
+  const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
+
+  const { selectedId } = useCurrentVideosContext();
+  console.log(selectedId);
+
+  const [video, setVideo] = React.useState([]);
+
+  React.useEffect(() => {
+    ApiHelper(`/api/videos/infos/${selectedId}`, "GET")
+      .then((response) => response.json())
+      .then((videos) => {
+        setVideo(videos);
+      })
+      .catch((error) => {
+        console.error("Error when getting videos", error);
+      });
+  }, []);
+  console.log(video);
+
   return (
     <View style={styles.container}>
       <Video
-        ref={video}
         style={styles.video}
         source={{
-          uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
+          uri: `${backendUrl}/api/videos/${video.url}`,
         }}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}
         isLooping
-        onPlaybackStatusUpdate={(status) => setStatus(() => status)}
       />
     </View>
   );
@@ -28,7 +45,7 @@ const styles = StyleSheet.create({
   },
   video: {
     width: "100%",
-    height: "100%",
+    height: 221,
   },
   buttons: {
     flexDirection: "row",
