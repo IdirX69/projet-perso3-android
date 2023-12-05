@@ -18,7 +18,7 @@ export default function Profil() {
 
   const [userInfo, setUserInfo] = useState({});
   const [editInfo, setEditInfo] = useState(false);
-  console.log(user);
+
   const { firstname, lastname, email } = userInfo;
 
   const handleLogout = () => {
