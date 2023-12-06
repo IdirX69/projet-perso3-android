@@ -1,8 +1,9 @@
 import * as React from "react";
-import { View, StyleSheet, Button } from "react-native";
+import { View, StyleSheet, Button, Text, Image } from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import { useCurrentVideosContext } from "../Context/VideoContext";
 import ApiHelper from "../helpers/ApiHelpers";
+import moment from "moment";
 
 export default function App() {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
@@ -24,24 +25,54 @@ export default function App() {
   }, []);
   console.log(video);
 
+  const videoDate = (video) =>
+    moment(video.creation_date).locale("fr").fromNow();
+
   return (
     <View style={styles.container}>
-      <Video
-        style={styles.video}
-        source={{
-          uri: `${backendUrl}/api/videos/${video.url}`,
-        }}
-        useNativeControls
-        resizeMode={ResizeMode.CONTAIN}
-        isLooping
-      />
+      <View>
+        <Video
+          style={styles.video}
+          source={{
+            uri: `${backendUrl}/api/videos/${video.url}`,
+          }}
+          useNativeControls
+          resizeMode={ResizeMode.CONTAIN}
+          isLooping
+        />
+      </View>
+      <View>
+        <Text style={styles.name}>{video.name}</Text>
+        <Text style={styles.date}>{videoDate(video.creation_date)}</Text>
+        <Text style={styles.description}>{video.description}</Text>
+        <View
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text style={styles.category}>{video.category_description}</Text>
+          <Image
+            style={styles.img}
+            source={require("../../assets/img/fav.png")}
+          />
+        </View>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#ecf0f1",
+    backgroundColor: "#010D18",
+    height: "100%",
+  },
+  img: {
+    margin: 10,
+    marginTop: 50,
+    height: 25,
+    width: 25,
   },
   video: {
     width: "100%",
@@ -51,5 +82,29 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  category: {
+    margin: 10,
+    backgroundColor: "#006DCE",
+    padding: 3,
+    maxWidth: "30%",
+    textAlign: "center",
+    borderRadius: 6,
+    color: "white",
+    marginTop: 50,
+  },
+  description: {
+    margin: 10,
+    color: "white",
+  },
+  date: {
+    margin: 10,
+    color: "#006DCE",
+  },
+  name: {
+    margin: 10,
+    color: "white",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
