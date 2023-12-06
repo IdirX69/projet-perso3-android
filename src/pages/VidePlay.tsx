@@ -4,14 +4,17 @@ import { Video, ResizeMode } from "expo-av";
 import { useCurrentVideosContext } from "../Context/VideoContext";
 import ApiHelper from "../helpers/ApiHelpers";
 import moment from "moment";
+import { useUser } from "../Context/UserContext";
 
 export default function App() {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
+  const { user } = useUser();
 
   const { selectedId } = useCurrentVideosContext();
-  console.log(selectedId);
 
   const [video, setVideo] = React.useState([]);
+  const [favorite, setFavorite] = React.useState([]);
+  console.log(favorite);
 
   React.useEffect(() => {
     ApiHelper(`/api/videos/infos/${selectedId}`, "GET")
@@ -22,8 +25,15 @@ export default function App() {
       .catch((error) => {
         console.error("Error when getting videos", error);
       });
+    ApiHelper(`/api/favoris/${user.sub}`, "GET")
+      .then((response) => response.json())
+      .then((videos) => {
+        setFavorite(videos);
+      })
+      .catch((error) => {
+        console.error("Error when getting favorite videos", error);
+      });
   }, []);
-  console.log(video);
 
   const videoDate = (video) =>
     moment(video.creation_date).locale("fr").fromNow();
@@ -53,10 +63,17 @@ export default function App() {
           }}
         >
           <Text style={styles.category}>{video.category_description}</Text>
-          <Image
-            style={styles.img}
-            source={require("../../assets/img/fav.png")}
-          />
+          {favorite.find((videos) => videos.id === video.id) ? (
+            <Image
+              style={styles.img}
+              source={require("../../assets/img/fav.png")}
+            />
+          ) : (
+            <Image
+              style={styles.img}
+              source={require("../../assets/img/unfav.png")}
+            />
+          )}
         </View>
       </View>
     </View>
