@@ -1,10 +1,18 @@
 import * as React from "react";
-import { View, StyleSheet, Button, Text, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Button,
+  Text,
+  Image,
+  TouchableOpacity,
+} from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import { useCurrentVideosContext } from "../Context/VideoContext";
 import ApiHelper from "../helpers/ApiHelpers";
 import moment from "moment";
 import { useUser } from "../Context/UserContext";
+import { Touchable } from "react-native";
 
 export default function App() {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
@@ -14,7 +22,6 @@ export default function App() {
 
   const [video, setVideo] = React.useState([]);
   const [favorite, setFavorite] = React.useState([]);
-  console.log(favorite);
 
   React.useEffect(() => {
     ApiHelper(`/api/videos/infos/${selectedId}`, "GET")
@@ -34,6 +41,26 @@ export default function App() {
         console.error("Error when getting favorite videos", error);
       });
   }, []);
+  const handleFavorite = async (userId, videoId) => {
+    const endpoint = `/api/favoris/${userId}/${videoId}`;
+    console.log(userId);
+
+    try {
+      if ((favorite || []).find((videos) => videos.id === videoId)) {
+        await ApiHelper(endpoint, "DELETE");
+
+        const response = await ApiHelper(`/api/favoris/${userId}`, "GET");
+        if (response.ok) {
+          const videos = await response.json();
+          setFavorite(videos);
+        } else {
+          console.error(`Error retrieving videos: ${response.status}`);
+        }
+      }
+    } catch (error) {
+      console.error(`Error handling favorite: ${error.message}`);
+    }
+  };
 
   const videoDate = (video) =>
     moment(video.creation_date).locale("fr").fromNow();
@@ -53,7 +80,7 @@ export default function App() {
       </View>
       <View>
         <Text style={styles.name}>{video.name}</Text>
-        <Text style={styles.date}>{videoDate(video.creation_date)}</Text>
+        {/* <Text style={styles.date}>{videoDate(video.creation_date)}</Text> */}
         <Text style={styles.description}>{video.description}</Text>
         <View
           style={{
@@ -63,17 +90,19 @@ export default function App() {
           }}
         >
           <Text style={styles.category}>{video.category_description}</Text>
-          {favorite.find((videos) => videos.id === video.id) ? (
-            <Image
-              style={styles.img}
-              source={require("../../assets/img/fav.png")}
-            />
-          ) : (
-            <Image
-              style={styles.img}
-              source={require("../../assets/img/unfav.png")}
-            />
-          )}
+          <TouchableOpacity onPress={() => handleFavorite(user.sub, video.id)}>
+            {favorite.find((videos) => videos.id === video.id) ? (
+              <Image
+                style={styles.img}
+                source={require("../../assets/img/fav.png")}
+              />
+            ) : (
+              <Image
+                style={styles.img}
+                source={require("../../assets/img/unfav.png")}
+              />
+            )}
+          </TouchableOpacity>
         </View>
       </View>
     </View>
