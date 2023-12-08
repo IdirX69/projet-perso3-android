@@ -42,19 +42,52 @@ export default function App() {
       });
   }, []);
   const handleFavorite = async (userId, videoId) => {
+    const registerBody = JSON.stringify({
+      user_id: userId,
+      videos_id: videoId,
+    });
+
     const endpoint = `/api/favoris/${userId}/${videoId}`;
-    console.log(userId);
 
     try {
-      if ((favorite || []).find((videos) => videos.id === videoId)) {
-        await ApiHelper(endpoint, "DELETE");
+      // Vérifier si l'élément est déjà un favori
+      const isFavorite = (favorite || []).some(
+        (videos) => videos.id === videoId
+      );
 
-        const response = await ApiHelper(`/api/favoris/${userId}`, "GET");
-        if (response.ok) {
-          const videos = await response.json();
-          setFavorite(videos);
-        } else {
-          console.error(`Error retrieving videos: ${response.status}`);
+      if (isFavorite) {
+        // Si l'élément est un favori, le supprimer
+        try {
+          await ApiHelper(endpoint, "DELETE");
+
+          // Mettre à jour les favoris après la suppression
+          const response = await ApiHelper(`/api/favoris/${userId}`, "GET");
+          if (response.ok) {
+            const videos = await response.json();
+            setFavorite(videos);
+          } else {
+            console.error(`Error retrieving videos: ${response.status}`);
+          }
+        } catch (err) {
+          console.error(
+            `Erreur lors de la suppression du favori: ${err.message}`
+          );
+        }
+      } else {
+        // Si l'élément n'est pas un favori, l'ajouter
+        try {
+          await ApiHelper(`/api/favoris/`, "POST", registerBody);
+
+          // Mettre à jour les favoris après l'ajout
+          const response = await ApiHelper(`/api/favoris/${userId}`, "GET");
+          if (response.ok) {
+            const videos = await response.json();
+            setFavorite(videos);
+          } else {
+            console.error(`Error retrieving videos: ${response.status}`);
+          }
+        } catch (err) {
+          console.error(`Erreur lors de l'ajout du favori: ${err.message}`);
         }
       }
     } catch (error) {
