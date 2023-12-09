@@ -18,13 +18,11 @@ const Favorite = () => {
       });
   }, []);
   return (
-    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
+    <TouchableOpacity style={{ backgroundColor: "#010D18", height: "100%" }}>
       {favortieVideos.map((video) => (
-        <TouchableOpacity key={video.id}>
-          <VideoCard video={video} />
-        </TouchableOpacity>
+        <VideoCard video={video} key={video.id} />
       ))}
-    </View>
+    </TouchableOpacity>
   );
 };
 

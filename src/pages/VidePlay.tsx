@@ -13,6 +13,7 @@ import ApiHelper from "../helpers/ApiHelpers";
 import moment from "moment";
 import { useUser } from "../Context/UserContext";
 import { Touchable } from "react-native";
+import Comment from "../components/Comment";
 
 export default function App() {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
@@ -138,6 +139,7 @@ export default function App() {
           </TouchableOpacity>
         </View>
       </View>
+      <Comment />
     </View>
   );
 }
