@@ -6,11 +6,9 @@ import VideoCard from "../components/VideoCard";
 const Favorite = () => {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
-  const { user, setUser } = useUser();
+  const { user } = useUser();
 
   const [favortieVideos, setFavoriteVideos] = useState([]);
-
-  console.log(favortieVideos);
 
   useEffect(() => {
     fetch(`${backendUrl}/api/favoris/${user.sub}`)
