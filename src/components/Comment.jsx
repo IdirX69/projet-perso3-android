@@ -8,7 +8,7 @@ const Comment = () => {
   const { user } = useUser();
   const [comment, setComment] = useState("");
   const [userInfo, setUserInfo] = useState("");
-  console.log(userInfo);
+  console.log(user);
   useEffect(() => {
     ApiHelper(`/api/users/${JSON.stringify(user.sub)}`, "GET")
       .then((response) => response.json())

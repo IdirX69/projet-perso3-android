@@ -51,7 +51,12 @@ const LoginPage = () => {
         const result = await response.json();
         if (result && result.token) {
           const decoded = jwtDecode(result.token);
-          setUser({ sub: decoded.sub, iat: decoded.iat, token: result.token });
+          setUser({
+            sub: decoded.sub,
+            iat: decoded.iat,
+            token: result.token,
+            avatar: result.avatar,
+          });
 
           await SecureStore.setItemAsync(
             "userToken",
