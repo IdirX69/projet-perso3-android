@@ -1,10 +1,12 @@
-import { View, Text } from "react-native";
+import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import ApiHelper from "../helpers/ApiHelpers";
 import VideoCard from "../components/VideoCard";
+import { useNavigation } from "@react-navigation/native";
 
 export default function SearchPage() {
   const [videos, setVideos] = useState([]);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     ApiHelper(`/api/videos`, "GET")
@@ -16,11 +18,33 @@ export default function SearchPage() {
         console.error("Error when getting videos", error);
       });
   }, []);
+
   return (
-    <View>
-      {videos.map((video) => (
-        <VideoCard key={video.id} video={video} />
-      ))}
+    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
+      <TextInput
+        placeholder="Recherche"
+        style={styles.searchBar}
+        onChangeText={(text) => setSearch(text)}
+      ></TextInput>
+      {videos
+        .filter((video) =>
+          video.name.toLowerCase().includes(search.toLowerCase())
+        )
+        .map((video) => (
+          <VideoCard key={video.id} video={video} />
+        ))}
     </View>
   );
 }
+const styles = StyleSheet.create({
+  searchBar: {
+    backgroundColor: "white",
+    width: "70%",
+    alignSelf: "center",
+    borderRadius: 10,
+    marginTop: 10,
+    fontSize: 14,
+    padding: 2,
+    paddingHorizontal: 7,
+  },
+});

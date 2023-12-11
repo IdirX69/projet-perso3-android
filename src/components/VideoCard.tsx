@@ -1,15 +1,26 @@
 import { View, Text, Image, TouchableOpacity, StyleSheet } from "react-native";
 import moment from "moment-with-locales-es6";
+import { useCurrentVideosContext } from "../Context/VideoContext";
 import React from "react";
+import { useNavigation } from "@react-navigation/native";
 
 export default function VideoCard({ video }) {
   const videoDate = (video) =>
     moment(video.creation_date).locale("fr").fromNow();
-  console.log(video);
+
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
+  const navigation = useNavigation();
+  const { setSelectedId } = useCurrentVideosContext();
+
+  const handlePress = () => {
+    setSelectedId(video.id);
+
+    navigation.navigate("Player");
+  };
+
   return (
-    <View style={styles.imageWrapper} onPress={() => {}}>
+    <View style={styles.imageWrapper}>
       <View style={styles.imageContainer}>
         <Image
           style={styles.image}
@@ -26,9 +37,11 @@ export default function VideoCard({ video }) {
                 {videoDate(video)}
               </Text>
             </View>
-            <View style={styles.btnPlay} onPress={() => {}}>
-              {/* play button icon */}
-              <Image source={require("../../assets/img/playIcon.png")} />
+            <View style={styles.btnPlay}>
+              <TouchableOpacity onPress={handlePress}>
+                {/* play button icon */}
+                <Image source={require("../../assets/img/playIcon.png")} />
+              </TouchableOpacity>
             </View>
           </View>
         </View>
@@ -47,7 +60,6 @@ const styles = StyleSheet.create({
     position: "relative",
     margin: "5%",
     zIndex: 0,
-    // Add other styles based on media queries for larger screens
   },
   imageContainer: {
     position: "relative",
@@ -55,7 +67,6 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%",
-    // Add other image styles
   },
   imageOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -72,9 +83,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
   },
-  videoInfoText: {
-    width: "calc(100% - 40)",
-  },
+
   videoName: {
     color: "#fff",
     overflow: "hidden",
@@ -85,9 +94,6 @@ const styles = StyleSheet.create({
   videoSubtext: {
     color: "#fff",
     overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    textAlign: "start",
     opacity: 0.8,
   },
   mediumText: {
