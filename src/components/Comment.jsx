@@ -27,7 +27,6 @@ const Comment = ({ videoId }) => {
         console.error("Error when getting user", error);
       });
   }, []);
-  console.log(videosComments.comment[0].content);
 
   return (
     <View style={styles.wrapper}>
@@ -57,6 +56,24 @@ const Comment = ({ videoId }) => {
           style={styles.img}
           source={require("../../assets/img/send.png")}
         />
+      </View>
+      <View
+        style={{
+          justifyContent: "space-around",
+          marginTop: 15,
+        }}
+      >
+        {Array.isArray(videosComments.comment) &&
+          videosComments.comment.map((com, index) => (
+            <View style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+              <Image
+                key={index}
+                style={styles.avatar}
+                source={require("../../assets/img/defaultAvatar.jpeg")}
+              />
+              <Text style={{ color: "white", margin: 15 }}>{com.content}</Text>
+            </View>
+          ))}
       </View>
     </View>
   );
