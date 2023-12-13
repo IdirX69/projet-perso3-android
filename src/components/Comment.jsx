@@ -34,6 +34,7 @@ const Comment = () => {
       >
         <TextInput
           placeholder="Ajouter un commentaire..."
+          placeholderTextColor="white"
           style={styles.input}
           value={comment}
           onChangeText={(text) => setComment(text)}
@@ -50,11 +51,20 @@ const Comment = () => {
 export default Comment;
 const styles = StyleSheet.create({
   wrapper: {
-    borderColor: "blue",
-    backgroundColor: "white",
+    width: "98%",
+    alignSelf: "center",
+    backgroundColor: "#010D18",
     minHeight: "20%",
+    borderWidth: 1,
+    borderColor: "#006DCE",
     borderRadius: 10,
   },
-  input: { backgroundColor: "red", width: "85%" },
-  img: { backgroundColor: "green", height: 26, width: 20, alignSelf: "center" },
+  input: {
+    borderBottomWidth: 1,
+    width: "65%",
+    borderBottomColor: "#006DCE",
+    color: "white",
+    paddingLeft: 10,
+  },
+  img: { height: 30, width: 30 },
 });
