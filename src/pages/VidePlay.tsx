@@ -139,7 +139,7 @@ export default function App() {
           </TouchableOpacity>
         </View>
       </View>
-      <Comment />
+      <Comment videoId={video.id} />
     </View>
   );
 }

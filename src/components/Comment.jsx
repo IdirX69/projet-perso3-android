@@ -3,12 +3,12 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import ApiHelper from "../helpers/ApiHelpers";
 
-const Comment = () => {
+const Comment = ({ videoId }) => {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
   const { user } = useUser();
   const [comment, setComment] = useState("");
+  const [videosComments, setVideoComments] = useState([]);
   const [userInfo, setUserInfo] = useState("");
-  console.log(user);
   useEffect(() => {
     ApiHelper(`/api/users/${JSON.stringify(user.sub)}`, "GET")
       .then((response) => response.json())
@@ -18,7 +18,16 @@ const Comment = () => {
       .catch((error) => {
         console.error("Error when getting user", error);
       });
+    ApiHelper(`/api/videos/infos/${JSON.stringify(videoId)}`, "GET")
+      .then((response) => response.json())
+      .then((comments) => {
+        setVideoComments(comments);
+      })
+      .catch((error) => {
+        console.error("Error when getting user", error);
+      });
   }, []);
+  console.log(videosComments.comment[0].content);
 
   return (
     <View style={styles.wrapper}>
