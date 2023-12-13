@@ -29,9 +29,14 @@ const Comment = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "space-around",
-          margin: 5,
+          marginTop: 15,
+          alignItems: "center",
         }}
       >
+        <Image
+          style={styles.avatar}
+          source={require("../../assets/img/defaultAvatar.jpeg")}
+        />
         <TextInput
           placeholder="Ajouter un commentaire..."
           placeholderTextColor="white"
@@ -66,5 +71,6 @@ const styles = StyleSheet.create({
     color: "white",
     paddingLeft: 10,
   },
-  img: { height: 30, width: 30 },
+  img: { height: 30, width: 30, alignSelf: "center" },
+  avatar: { height: 50, width: 50, backgroundColor: "white", borderRadius: 50 },
 });
