@@ -8,26 +8,27 @@ const Comment = ({ videoId }) => {
   const { user } = useUser();
   const [comment, setComment] = useState("");
   const [videosComments, setVideoComments] = useState([]);
-  const [userInfo, setUserInfo] = useState("");
-  console.log(user.user.avatar);
+
   useEffect(() => {
-    ApiHelper(`/api/users/${JSON.stringify(user.sub)}`, "GET")
-      .then((response) => response.json())
-      .then((user) => {
-        setUserInfo(user);
-      })
-      .catch((error) => {
-        console.error("Error when getting user", error);
-      });
-    ApiHelper(`/api/videos/infos/${JSON.stringify(videoId)}`, "GET")
-      .then((response) => response.json())
-      .then((comments) => {
-        setVideoComments(comments);
-      })
-      .catch((error) => {
-        console.error("Error when getting user", error);
-      });
-  }, []);
+    if (videoId) {
+      ApiHelper(`/api/videos/infos/${videoId}`, "GET")
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error(`Request failed with status: ${response.status}`);
+          }
+          return response.json();
+        })
+        .then((comments) => {
+          console.log("Comments:", comments);
+          setVideoComments(comments);
+        })
+        .catch((error) => {
+          console.error("Error when getting infos", error);
+        });
+    }
+  }, [videoId]);
+
+  const handleSubmit = () => {};
 
   return (
     <View style={styles.wrapper}>
@@ -40,7 +41,7 @@ const Comment = ({ videoId }) => {
           alignItems: "center",
         }}
       >
-        {user.user.avatar ? (
+        {user?.user?.avatar ? (
           <Image
             style={styles.avatar}
             source={{ uri: `${backendUrl}/api/avatars/${user.user.avatar}` }}
@@ -75,9 +76,13 @@ const Comment = ({ videoId }) => {
               <Image
                 key={index}
                 style={styles.avatar}
-                source={require("../../assets/img/defaultAvatar.jpeg")}
+                source={
+                  com?.avatar
+                    ? { uri: `${backendUrl}/api/avatars/${com?.avatar}` }
+                    : require("../../assets/img/defaultAvatar.jpeg")
+                }
               />
-              <Text style={{ color: "white", margin: 15 }}>{com.content}</Text>
+              <Text style={{ color: "white", margin: 15 }}>{com?.content}</Text>
             </View>
           ))}
       </View>

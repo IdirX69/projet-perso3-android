@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import VideoCard from "../components/VideoCard";
@@ -19,7 +19,7 @@ const Favorite = () => {
   }, []);
   return (
     <TouchableOpacity style={{ backgroundColor: "#010D18", height: "100%" }}>
-      {favortieVideos.map((video) => (
+      {favortieVideos?.map((video) => (
         <VideoCard video={video} key={video.id} />
       ))}
     </TouchableOpacity>
