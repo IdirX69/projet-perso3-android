@@ -9,6 +9,7 @@ const Comment = ({ videoId }) => {
   const [comment, setComment] = useState("");
   const [videosComments, setVideoComments] = useState([]);
   const [userInfo, setUserInfo] = useState("");
+  console.log(user.user.avatar);
   useEffect(() => {
     ApiHelper(`/api/users/${JSON.stringify(user.sub)}`, "GET")
       .then((response) => response.json())
@@ -30,8 +31,6 @@ const Comment = ({ videoId }) => {
 
   return (
     <View style={styles.wrapper}>
-      {/* <Image source={require(`${backendUrl}/api/avatars/${user.avatar}`)} /> */}
-
       <View
         style={{
           display: "flex",
@@ -41,10 +40,17 @@ const Comment = ({ videoId }) => {
           alignItems: "center",
         }}
       >
-        <Image
-          style={styles.avatar}
-          source={require("../../assets/img/defaultAvatar.jpeg")}
-        />
+        {user.user.avatar ? (
+          <Image
+            style={styles.avatar}
+            source={{ uri: `${backendUrl}/api/avatars/${user.user.avatar}` }}
+          />
+        ) : (
+          <Image
+            style={styles.avatar}
+            source={require("../../assets/img/defaultAvatar.jpeg")}
+          />
+        )}
         <TextInput
           placeholder="Ajouter un commentaire..."
           placeholderTextColor="white"
