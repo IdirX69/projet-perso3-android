@@ -158,12 +158,14 @@ const Comment = ({ videoId }) => {
               }}
             >
               <Text style={{ color: "white", margin: 15 }}>{com?.content}</Text>
-              <TouchableOpacity onPress={() => handleDelete(com.id)}>
-                <Image
-                  style={styles.deleteImg}
-                  source={require("../../assets/img/delete.png")}
-                />
-              </TouchableOpacity>
+              {com.User_id == user.sub ? (
+                <TouchableOpacity onPress={() => handleDelete(com.id)}>
+                  <Image
+                    style={styles.deleteImg}
+                    source={require("../../assets/img/delete.png")}
+                  />
+                </TouchableOpacity>
+              ) : null}
             </View>
           </View>
         ))}
