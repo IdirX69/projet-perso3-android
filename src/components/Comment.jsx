@@ -1,4 +1,11 @@
-import { View, Text, TextInput, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import ApiHelper from "../helpers/ApiHelpers";
@@ -28,7 +35,34 @@ const Comment = ({ videoId }) => {
     }
   }, [videoId]);
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (!comment.trim()) {
+      console.log("Comment is empty");
+      return;
+    }
+
+    const data = JSON.stringify({
+      content: comment,
+      User_id: user.sub,
+      Videos_id: videoId,
+    });
+
+    ApiHelper(`/api/videos/infos/${videoId}/comments/`, "POST", data)
+      .then((response) => {
+        console.log("Response:", response);
+        if (!response.ok) {
+          throw new Error(`Request failed with status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((comments) => {
+        console.log("Comments:", comments);
+        setVideoComments(comments);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
 
   return (
     <View style={styles.wrapper}>
@@ -59,10 +93,12 @@ const Comment = ({ videoId }) => {
           value={comment}
           onChangeText={(text) => setComment(text)}
         />
-        <Image
-          style={styles.img}
-          source={require("../../assets/img/send.png")}
-        />
+        <TouchableOpacity onPress={handleSubmit}>
+          <Image
+            style={styles.img}
+            source={require("../../assets/img/send.png")}
+          />
+        </TouchableOpacity>
       </View>
       <View
         style={{
