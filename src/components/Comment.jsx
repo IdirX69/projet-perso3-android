@@ -33,7 +33,7 @@ const Comment = ({ videoId }) => {
           console.error("Error when getting infos", error);
         });
     }
-  }, [videoId]);
+  }, [videoId, comment]);
 
   const handleSubmit = () => {
     if (!comment.trim()) {
@@ -49,18 +49,17 @@ const Comment = ({ videoId }) => {
 
     ApiHelper(`/api/videos/infos/${videoId}/comments/`, "POST", data)
       .then((response) => {
-        console.log("Response:", response);
         if (!response.ok) {
           throw new Error(`Request failed with status: ${response.status}`);
         }
         return response.json();
       })
-      .then((comments) => {
-        console.log("Comments:", comments);
-        setVideoComments(comments);
-      })
-      .catch((error) => {
-        console.error(error);
+      .then((response) => {
+        console.warn(response);
+        fetch(`${backendUrl}/api/videos/infos/${videoId}`)
+          .then((res) => res.json())
+          .then((videos) => setVideoComments(videos.comment));
+        setComment("");
       });
   };
 
