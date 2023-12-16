@@ -20,34 +20,34 @@ export default function VideoCard({ video }) {
   };
 
   return (
-    <View style={styles.imageWrapper}>
-      <View style={styles.imageContainer}>
-        <Image
-          style={styles.image}
-          source={{ uri: `${backendUrl}/api/videos/${video.img}` }}
-          resizeMode="cover"
-        />
-        <View style={styles.imageOverlay}>
-          <View style={styles.videoInfo}>
-            <View style={styles.videoInfoText}>
-              <Text style={[styles.videoName, styles.mediumText]}>
-                {video.name}
-              </Text>
-              <Text style={[styles.videoSubtext, styles.mediumText]}>
-                {videoDate(video)}
-              </Text>
-            </View>
-            <View style={styles.btnPlay}>
-              <TouchableOpacity onPress={handlePress}>
+    <TouchableOpacity onPress={handlePress}>
+      <View style={styles.imageWrapper}>
+        <View style={styles.imageContainer}>
+          <Image
+            style={styles.image}
+            source={{ uri: `${backendUrl}/api/videos/${video.img}` }}
+            resizeMode="cover"
+          />
+          <View style={styles.imageOverlay}>
+            <View style={styles.videoInfo}>
+              <View style={styles.videoInfoText}>
+                <Text style={[styles.videoName, styles.mediumText]}>
+                  {video.name}
+                </Text>
+                <Text style={[styles.videoSubtext, styles.mediumText]}>
+                  {videoDate(video)}
+                </Text>
+              </View>
+              <View style={styles.btnPlay}>
                 {/* play button icon */}
                 <Image source={require("../../assets/img/playIcon.png")} />
-              </TouchableOpacity>
+              </View>
             </View>
           </View>
         </View>
+        <Text style={styles.videoTime}>{video.category_description}</Text>
       </View>
-      <Text style={styles.videoTime}>{video.category_description}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }
 

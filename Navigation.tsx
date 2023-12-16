@@ -84,9 +84,21 @@ function Navigation() {
             })}
           >
             <>
-              <Tab.Screen name="Home" component={Home} />
-              <Tab.Screen name="Search" component={SearchPage} />
-              <Tab.Screen name="Favoris" component={Favorite} />
+              <Tab.Screen
+                name="Home"
+                component={Home}
+                options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+              />
+              <Tab.Screen
+                name="Search"
+                component={SearchPage}
+                options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+              />
+              <Tab.Screen
+                name="Favoris"
+                component={Favorite}
+                options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
+              />
               <Tab.Screen
                 name="Profile"
                 component={Profil}

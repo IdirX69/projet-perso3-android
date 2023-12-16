@@ -6,11 +6,9 @@ import VideoCard from "../components/VideoCard";
 const Favorite = () => {
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 
-  const { user, setUser } = useUser();
+  const { user } = useUser();
 
   const [favortieVideos, setFavoriteVideos] = useState([]);
-
-  console.log(favortieVideos);
 
   useEffect(() => {
     fetch(`${backendUrl}/api/favoris/${user.sub}`)
@@ -20,13 +18,11 @@ const Favorite = () => {
       });
   }, []);
   return (
-    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
+    <TouchableOpacity style={{ backgroundColor: "#010D18", height: "100%" }}>
       {favortieVideos.map((video) => (
-        <TouchableOpacity key={video.id}>
-          <VideoCard video={video} />
-        </TouchableOpacity>
+        <VideoCard video={video} key={video.id} />
       ))}
-    </View>
+    </TouchableOpacity>
   );
 };
 
