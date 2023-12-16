@@ -117,7 +117,22 @@ const Comment = ({ videoId }) => {
                     : require("../../assets/img/defaultAvatar.jpeg")
                 }
               />
-              <Text style={{ color: "white", margin: 15 }}>{com?.content}</Text>
+              <View
+                style={{
+                  width: "90%",
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text style={{ color: "white", margin: 15 }}>
+                  {com?.content}
+                </Text>
+                <Image
+                  style={styles.deleteImg}
+                  source={require("../../assets/img/delete.png")}
+                />
+              </View>
             </View>
           ))}
       </View>
@@ -144,5 +159,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
   },
   img: { height: 30, width: 30, alignSelf: "center" },
+  deleteImg: { height: 20, width: 20, alignSelf: "center", margin: 10 },
   avatar: { height: 50, width: 50, backgroundColor: "white", borderRadius: 50 },
 });
