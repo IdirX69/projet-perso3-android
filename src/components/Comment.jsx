@@ -5,6 +5,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
@@ -55,16 +56,41 @@ const Comment = ({ videoId }) => {
         return response.json();
       })
       .then((response) => {
-        console.warn(response);
-        fetch(`${backendUrl}/api/videos/infos/${videoId}`)
-          .then((res) => res.json())
-          .then((videos) => setVideoComments(videos.comment));
+        setVideoComments((prevComments) => {
+          const updatedComments = [...prevComments.comment, response];
+          return { comment: updatedComments };
+        });
+
         setComment("");
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
+  };
+
+  const handleDelete = (id) => {
+    ApiHelper(`/api/videos/infos/${videoId}/comments/${id}`, "DELETE")
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            `Request failed with status: ${response.status}, ${response.statusText}`
+          );
+        }
+
+        setVideoComments((prevComments) => {
+          const updatedComments = prevComments.comment.filter(
+            (comment) => comment.id !== id
+          );
+          return { comment: updatedComments };
+        });
+      })
+      .catch((error) => {
+        console.error(error.message);
       });
   };
 
   return (
-    <View style={styles.wrapper}>
+    <ScrollView style={styles.wrapper}>
       <View
         style={{
           display: "flex",
@@ -132,27 +158,30 @@ const Comment = ({ videoId }) => {
               }}
             >
               <Text style={{ color: "white", margin: 15 }}>{com?.content}</Text>
-              <Image
-                style={styles.deleteImg}
-                source={require("../../assets/img/delete.png")}
-              />
+              <TouchableOpacity onPress={() => handleDelete(com.id)}>
+                <Image
+                  style={styles.deleteImg}
+                  source={require("../../assets/img/delete.png")}
+                />
+              </TouchableOpacity>
             </View>
           </View>
         ))}
-    </View>
+    </ScrollView>
   );
 };
 
 export default Comment;
 const styles = StyleSheet.create({
   wrapper: {
+    flexGrow: 1,
     width: "98%",
     alignSelf: "center",
     backgroundColor: "#010D18",
-    minHeight: "20%",
     borderWidth: 1,
     borderColor: "#006DCE",
     borderRadius: 10,
+    padding: 5,
   },
   input: {
     borderBottomWidth: 1,

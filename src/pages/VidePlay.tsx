@@ -2,17 +2,17 @@ import * as React from "react";
 import {
   View,
   StyleSheet,
-  Button,
   Text,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Video, ResizeMode } from "expo-av";
 import { useCurrentVideosContext } from "../Context/VideoContext";
 import ApiHelper from "../helpers/ApiHelpers";
 import moment from "moment";
 import { useUser } from "../Context/UserContext";
-import { Touchable } from "react-native";
+
 import Comment from "../components/Comment";
 
 export default function App() {
@@ -100,7 +100,7 @@ export default function App() {
     moment(video.creation_date).locale("fr").fromNow();
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View>
         <Video
           style={styles.video}
@@ -140,7 +140,7 @@ export default function App() {
         </View>
       </View>
       <Comment videoId={video.id} />
-    </View>
+    </ScrollView>
   );
 }
 
