@@ -99,15 +99,17 @@ const Comment = ({ videoId }) => {
           />
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          justifyContent: "space-around",
-          marginTop: 15,
-        }}
-      >
-        {Array.isArray(videosComments.comment) &&
-          videosComments.comment.map((com, index) => (
-            <View style={{ display: "flex", flexDirection: "row", margin: 10 }}>
+
+      {Array.isArray(videosComments.comment) &&
+        videosComments.comment.map((com, index) => (
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              margin: 10,
+            }}
+          >
+            <View>
               <Image
                 key={index}
                 style={styles.avatar}
@@ -117,25 +119,26 @@ const Comment = ({ videoId }) => {
                     : require("../../assets/img/defaultAvatar.jpeg")
                 }
               />
-              <View
-                style={{
-                  width: "90%",
-                  display: "flex",
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <Text style={{ color: "white", margin: 15 }}>
-                  {com?.content}
-                </Text>
-                <Image
-                  style={styles.deleteImg}
-                  source={require("../../assets/img/delete.png")}
-                />
-              </View>
+              <Text style={{ color: "white", textAlign: "center" }}>
+                {com?.firstname}
+              </Text>
             </View>
-          ))}
-      </View>
+            <View
+              style={{
+                width: "90%",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Text style={{ color: "white", margin: 15 }}>{com?.content}</Text>
+              <Image
+                style={styles.deleteImg}
+                source={require("../../assets/img/delete.png")}
+              />
+            </View>
+          </View>
+        ))}
     </View>
   );
 };
