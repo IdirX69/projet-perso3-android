@@ -1,8 +1,14 @@
-import { View, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import ApiHelper from "../helpers/ApiHelpers";
 import VideoCard from "../components/VideoCard";
-import { useNavigation } from "@react-navigation/native";
 
 export default function SearchPage() {
   const [videos, setVideos] = useState([]);
@@ -20,22 +26,42 @@ export default function SearchPage() {
   }, []);
 
   return (
-    <View style={{ backgroundColor: "#010D18", height: "100%" }}>
-      <TextInput
-        placeholder="Recherche"
-        style={styles.searchBar}
-        onChangeText={(text) => setSearch(text)}
-      ></TextInput>
-      {videos
-        .filter((video) =>
-          video.name.toLowerCase().includes(search.toLowerCase())
-        )
-        .map((video) => (
-          <VideoCard key={video.id} video={video} />
-        ))}
-    </View>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <ScrollView
+        contentContainerStyle={{
+          backgroundColor: "#010D18",
+          paddingVertical: 10,
+          height: "100%",
+        }}
+      >
+        <TextInput
+          placeholder="Recherche"
+          style={styles.searchBar}
+          onChangeText={(text) => setSearch(text)}
+        />
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-around",
+            marginVertical: 10,
+          }}
+        >
+          {videos
+            .filter((video) =>
+              video.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((video) => (
+              <VideoCard key={video.id} video={video} />
+            ))}
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
+
 const styles = StyleSheet.create({
   searchBar: {
     backgroundColor: "white",

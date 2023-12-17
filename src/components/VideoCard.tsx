@@ -55,11 +55,11 @@ const styles = StyleSheet.create({
   imageWrapper: {
     borderRadius: 12,
     overflow: "hidden",
-    width: "40%",
-    height: "45%",
+    width: "50%",
+    height: "50%",
+    aspectRatio: 9 / 9,
     position: "relative",
-    margin: "5%",
-    zIndex: 0,
+    margin: "3%", // Ajustez la marge ici
   },
   imageContainer: {
     position: "relative",
