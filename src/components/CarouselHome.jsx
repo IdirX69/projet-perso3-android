@@ -36,7 +36,7 @@ const CarouselHome = () => {
 
   return (
     <Carousel
-      layout="default"
+      layout="stack"
       data={carouselData}
       renderItem={renderItem}
       sliderWidth={screenWidth}
