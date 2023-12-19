@@ -54,7 +54,9 @@ export default function SearchPage() {
               video.name.toLowerCase().includes(search.toLowerCase())
             )
             .map((video) => (
-              <VideoCard key={video.id} video={video} />
+              <View style={styles.videoCardContainer} key={video.id}>
+                <VideoCard video={video} />
+              </View>
             ))}
         </View>
       </ScrollView>
@@ -72,5 +74,10 @@ const styles = StyleSheet.create({
     fontSize: 14,
     padding: 2,
     paddingHorizontal: 7,
+  },
+  videoCardContainer: {
+    width: 190,
+    aspectRatio: 9 / 9,
+    marginRight: 10,
   },
 });

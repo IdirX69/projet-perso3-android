@@ -55,8 +55,6 @@ const styles = StyleSheet.create({
   imageWrapper: {
     borderRadius: 12,
     overflow: "hidden",
-    width: "50%",
-    height: "50%",
     aspectRatio: 9 / 9,
     position: "relative",
     margin: "3%", // Ajustez la marge ici

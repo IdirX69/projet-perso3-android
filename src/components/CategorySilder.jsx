@@ -4,7 +4,6 @@ import ApiHelper from "../helpers/ApiHelpers";
 
 const CategorySlider = () => {
   const [category, setCategory] = useState([]);
-  console.log(category);
 
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
 

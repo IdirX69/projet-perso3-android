@@ -1,4 +1,9 @@
-import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import VideoCard from "../components/VideoCard";
@@ -39,7 +44,9 @@ const Favorite = () => {
           }}
         >
           {favortieVideos?.map((video) => (
-            <VideoCard video={video} key={video.id} />
+            <View style={styles.videoCardContainer} key={video.id}>
+              <VideoCard video={video} />
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -48,3 +55,10 @@ const Favorite = () => {
 };
 
 export default Favorite;
+const styles = StyleSheet.create({
+  videoCardContainer: {
+    width: 190,
+    aspectRatio: 9 / 9,
+    marginRight: 10,
+  },
+});
