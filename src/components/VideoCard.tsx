@@ -15,7 +15,6 @@ export default function VideoCard({ video }) {
 
   const handlePress = () => {
     setSelectedId(video.id);
-
     navigation.navigate("Player");
   };
 

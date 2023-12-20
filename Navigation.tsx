@@ -109,7 +109,10 @@ function Navigation() {
             <Tab.Screen
               name="Player"
               component={VidePlay}
-              options={{ tabBarButton: () => null }}
+              options={{
+                tabBarButton: () => null,
+                headerTitle: (props) => <LogoTitle {...props} />,
+              }}
             />
           </Tab.Navigator>
         </NavigationContainer>

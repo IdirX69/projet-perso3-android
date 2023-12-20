@@ -41,7 +41,7 @@ export default function App() {
       .catch((error) => {
         console.error("Error when getting favorite videos", error);
       });
-  }, []);
+  }, [selectedId]);
   const handleFavorite = async (userId, videoId) => {
     const registerBody = JSON.stringify({
       user_id: userId,
