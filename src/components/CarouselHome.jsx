@@ -1,14 +1,25 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native";
 import Carousel from "react-native-snap-carousel";
 import ApiHelper from "../helpers/ApiHelpers";
+import { useCurrentVideosContext } from "../Context/VideoContext";
+import { useNavigation } from "@react-navigation/native";
 
 const { width: screenWidth } = Dimensions.get("window");
 
 const CarouselHome = () => {
   const [videos, setVideos] = useState([]);
+  const { setSelectedId } = useCurrentVideosContext();
 
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
+  const navigation = useNavigation();
 
   useEffect(() => {
     ApiHelper(`/api/videos`, "GET")
@@ -21,6 +32,10 @@ const CarouselHome = () => {
       });
   }, []);
 
+  const handlePress = (videoId) => {
+    setSelectedId(videoId);
+    navigation.navigate("Player");
+  };
   const carouselData = videos.map((video) => ({
     id: video.id.toString(),
     title: video.name,
@@ -28,12 +43,11 @@ const CarouselHome = () => {
   }));
 
   const renderItem = ({ item }) => (
-    <View style={styles.carouselItem}>
+    <View style={styles.carouselItem} onTouchEnd={() => handlePress(item.id)}>
       <Image source={item.image} style={styles.carouselImage} />
       <Text style={styles.carouselTitle}>{item.title}</Text>
     </View>
   );
-
   return (
     <Carousel
       layout="stack"
