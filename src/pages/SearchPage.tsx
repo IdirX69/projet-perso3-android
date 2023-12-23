@@ -10,7 +10,7 @@ import {
 import ApiHelper from "../helpers/ApiHelpers";
 import VideoCard from "../components/VideoCard";
 
-export default function SearchPage() {
+export default function SearchPage({ selectedCategory }) {
   const [videos, setVideos] = useState([]);
   const [search, setSearch] = useState("");
 
@@ -50,8 +50,10 @@ export default function SearchPage() {
           }}
         >
           {videos
-            .filter((video) =>
-              video.name.toLowerCase().includes(search.toLowerCase())
+            .filter(
+              (video) =>
+                video.name.toLowerCase().includes(search.toLowerCase()) &&
+                (!selectedCategory || video.category_id === selectedCategory)
             )
             .map((video) => (
               <View style={styles.videoCardContainer} key={video.id}>

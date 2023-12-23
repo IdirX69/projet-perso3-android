@@ -1,12 +1,20 @@
-import { View, Text, ScrollView, Image, StyleSheet } from "react-native";
+import {
+  View,
+  Text,
+  ScrollView,
+  Image,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import ApiHelper from "../helpers/ApiHelpers";
+import { useNavigation } from "@react-navigation/native";
 
-const CategorySlider = () => {
+const CategorySlider = ({ setSelectedCategory }) => {
   const [category, setCategory] = useState([]);
 
   const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
-
+  const navigation = useNavigation();
   useEffect(() => {
     ApiHelper(`/api/category`, "GET")
       .then((response) => response.json())
@@ -17,6 +25,10 @@ const CategorySlider = () => {
         console.error("Error when getting category", error);
       });
   }, []);
+  const handlePress = (categoryId) => {
+    navigation.navigate("Search");
+    setSelectedCategory(categoryId);
+  };
 
   return (
     <>
@@ -24,10 +36,12 @@ const CategorySlider = () => {
       <ScrollView horizontal={true} style={styles.scrollView}>
         {category.map((cat) => (
           <View key={cat.id} style={styles.imgWrapper}>
-            <Image
-              style={styles.image}
-              source={{ uri: `${backendUrl}/api/videos/${cat.img}` }}
-            />
+            <TouchableOpacity onPress={() => handlePress(cat.id)}>
+              <Image
+                style={styles.image}
+                source={{ uri: `${backendUrl}/api/videos/${cat.img}` }}
+              />
+            </TouchableOpacity>
 
             <Text style={styles.name}>{cat.name}</Text>
           </View>

@@ -15,14 +15,12 @@ import SearchPage from "./src/pages/SearchPage";
 import VidePlay from "./src/pages/VidePlay";
 import Favorite from "./src/pages/Favorite";
 
-function ProfilScreen() {
-  return <></>;
-}
 const Stack = createStackNavigator();
 
 const Tab = createBottomTabNavigator();
 
 function Navigation() {
+  const [selectedCategory, setSelectedCategory] = useState("lol");
   const [dataToken, setDataToken] = useState(null);
   const { user } = useUser();
 
@@ -86,14 +84,26 @@ function Navigation() {
             <>
               <Tab.Screen
                 name="Home"
-                component={Home}
                 options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-              />
+              >
+                {() => (
+                  <Home
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                  />
+                )}
+              </Tab.Screen>
               <Tab.Screen
                 name="Search"
-                component={SearchPage}
                 options={{ headerTitle: (props) => <LogoTitle {...props} /> }}
-              />
+              >
+                {() => (
+                  <SearchPage
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                  />
+                )}
+              </Tab.Screen>
               <Tab.Screen
                 name="Favoris"
                 component={Favorite}

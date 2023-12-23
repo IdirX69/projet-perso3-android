@@ -4,11 +4,11 @@ import CarouselHome from "../components/CarouselHome";
 import CategorySilder from "../components/CategorySilder";
 import VideoSlider from "../components/VideoSlider";
 
-export default function Home() {
+export default function Home({ selectedCategory, setSelectedCategory }) {
   return (
     <ScrollView style={styles.scrollView}>
       <CarouselHome />
-      <CategorySilder />
+      <CategorySilder setSelectedCategory={setSelectedCategory} />
       <VideoSlider title={"Mis en avant"} />
     </ScrollView>
   );

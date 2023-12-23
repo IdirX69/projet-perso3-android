@@ -8,21 +8,29 @@ import React, { useEffect, useState } from "react";
 import { useUser } from "../Context/UserContext";
 import VideoCard from "../components/VideoCard";
 import { View } from "react-native";
+import ApiHelper from "../helpers/ApiHelpers";
+import { useFocusEffect } from "@react-navigation/native";
 
 const Favorite = () => {
-  const backendUrl = process.env.EXPO_PUBLIC_ADDRESS_BACK_END;
-
   const { user } = useUser();
 
   const [favortieVideos, setFavoriteVideos] = useState([]);
 
-  useEffect(() => {
-    fetch(`${backendUrl}/api/favoris/${user.sub}`)
-      .then((res) => res.json())
-      .then((videos) => {
-        setFavoriteVideos(videos);
-      });
-  }, []);
+  const loadFavoriteVideos = async () => {
+    try {
+      const response = await ApiHelper(`/api/favoris/${user.sub}`);
+      const videos = await response.json();
+      setFavoriteVideos(videos);
+    } catch (error) {
+      console.error("Error loading favorite videos:", error);
+    }
+  };
+
+  useFocusEffect(
+    React.useCallback(() => {
+      loadFavoriteVideos();
+    }, [user.sub])
+  );
 
   return (
     <KeyboardAvoidingView
