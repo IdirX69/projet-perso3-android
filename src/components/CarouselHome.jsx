@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import ApiHelper from "../helpers/ApiHelpers";
 import { useCurrentVideosContext } from "../Context/VideoContext";

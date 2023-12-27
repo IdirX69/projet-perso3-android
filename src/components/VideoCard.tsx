@@ -84,9 +84,7 @@ const styles = StyleSheet.create({
   videoName: {
     color: "#fff",
     overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    textAlign: "start",
+    textAlign: "left",
   },
   videoSubtext: {
     color: "#fff",

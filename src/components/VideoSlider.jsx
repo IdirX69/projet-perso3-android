@@ -22,7 +22,7 @@ const VideoSlider = ({ title }) => {
       <Text style={styles.text}>{title}</Text>
       <ScrollView horizontal={true} style={styles.scrollView}>
         {videos.map((video) => (
-          <View style={styles.videoCardContainer}>
+          <View key={video.id} style={styles.videoCardContainer}>
             <VideoCard video={video} />
           </View>
         ))}
@@ -42,12 +42,12 @@ const styles = StyleSheet.create({
   videoCardContainer: {
     width: 200,
     justifyContent: "space-around",
-    aspectRatio: 9 / 9, // Vous pouvez ajuster cela en fonction de vos besoins
+    aspectRatio: 9 / 9,
     marginRight: 10,
   },
 
   scrollView: {
     marginTop: 10,
   },
-  text: { color: "white", fontSize: 25, margin: 10 },
+  text: { fontSize: 25, margin: 10 },
 });
