@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  Platform,
 } from "react-native";
 import React, { useState } from "react";
 import { useUser } from "../Context/UserContext";
@@ -43,29 +42,48 @@ const LoginPage = () => {
   const handleSubmit = async () => {
     if (email && password) {
       try {
+        console.log("Avant l'appel à ApiLoginHelper");
+
         const response = await ApiLoginHelper(JSON.stringify(postData));
         if (!response.ok) {
+          console.error("Erreur de connexion :", response.status);
+          const errorMessage = await response.text();
+          console.error("Message d'erreur :", errorMessage);
           throw new Error("Erreur de connexion");
-        } else {
         }
+
+        console.log("Avant la conversion de la réponse en JSON");
+
         const result = await response.json();
+
+        console.log("Après la conversion de la réponse en JSON");
+
         if (result && result.token) {
           const decoded = jwtDecode(result.token);
+
+          console.log("Avant la mise à jour de l'utilisateur et du token");
+
           setUser({
             sub: decoded.sub,
             iat: decoded.iat,
             token: result.token,
-            avatar: result.avatar,
+            user: result.user,
           });
+
+          console.log("Avant la mise à jour du token dans SecureStore");
 
           await SecureStore.setItemAsync(
             "userToken",
             JSON.stringify({ user: decoded.sub, token: result.token })
           );
+
+          console.log("Après la mise à jour du token dans SecureStore");
         }
+
+        console.log("Après la mise à jour de l'utilisateur et du token");
         console.log(user);
       } catch (error) {
-        console.error(error);
+        console.error("Erreur de requête :", error);
       }
     }
   };

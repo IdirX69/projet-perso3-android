@@ -15,7 +15,6 @@ export default function VideoCard({ video }) {
 
   const handlePress = () => {
     setSelectedId(video.id);
-
     navigation.navigate("Player");
   };
 
@@ -55,11 +54,9 @@ const styles = StyleSheet.create({
   imageWrapper: {
     borderRadius: 12,
     overflow: "hidden",
-    width: "40%",
-    height: "45%",
+    aspectRatio: 9 / 9,
     position: "relative",
-    margin: "5%",
-    zIndex: 0,
+    margin: "3%", // Ajustez la marge ici
   },
   imageContainer: {
     position: "relative",
@@ -87,9 +84,7 @@ const styles = StyleSheet.create({
   videoName: {
     color: "#fff",
     overflow: "hidden",
-    whiteSpace: "nowrap",
-    textOverflow: "ellipsis",
-    textAlign: "start",
+    textAlign: "left",
   },
   videoSubtext: {
     color: "#fff",

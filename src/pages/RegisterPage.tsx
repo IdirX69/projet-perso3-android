@@ -5,6 +5,7 @@ import {
   TextInput,
   StyleSheet,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React, { useState } from "react";
 import { ApiRegisterHelper } from "../helpers/ApiHelpers";
@@ -40,11 +41,9 @@ const RegisterPage = () => {
     }
   };
   return (
-    <View
+    <ScrollView
       style={{
         backgroundColor: "#010D18",
-        height: "100%",
-        overflow: "visible",
       }}
     >
       <View>
@@ -120,7 +119,7 @@ const RegisterPage = () => {
           Inscription
         </Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
   );
 };
 const styles = StyleSheet.create({
