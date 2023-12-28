@@ -19,8 +19,6 @@ export default function Profil() {
   const [userInfo, setUserInfo] = useState({});
   const [editInfo, setEditInfo] = useState(false);
 
-  const { firstname, lastname, email } = userInfo;
-
   const handleLogout = () => {
     SecureStore.deleteItemAsync("userToken");
     setUser({});
@@ -36,7 +34,24 @@ export default function Profil() {
         console.error("Error when getting user", error);
       });
   }, []);
+  const handlePress = () => {
+    setEditInfo(false);
+    console.log(userInfo);
 
+    const updatedInfo = JSON.stringify({
+      firstname: userInfo.firstname,
+      lastname: userInfo.lastname,
+      email: userInfo.email,
+    });
+
+    ApiHelper(`/api/users/${user.sub}`, "PUT", updatedInfo)
+      .then((response) => {
+        console.log("Mise à jour réussie :", response);
+      })
+      .catch((error) => {
+        console.error("Erreur lors de la mise à jour :", error);
+      });
+  };
   return (
     <View style={{ backgroundColor: "#010D18", height: "100%" }}>
       <View style={{ marginBottom: 50 }}>
@@ -49,7 +64,9 @@ export default function Profil() {
           source={require("../../assets/img/logoOrigins.png")}
         />
       </View>
-      <Text style={styles.text}>{firstname + " " + lastname}</Text>
+      <Text style={styles.text}>
+        {userInfo.firstname + " " + userInfo.lastname}
+      </Text>
       {!editInfo ? (
         <View>
           <TouchableOpacity
@@ -65,26 +82,30 @@ export default function Profil() {
       ) : (
         <View style={{ display: "flex", alignItems: "center" }}>
           <TextInput
-            value={firstname}
+            value={userInfo.firstname}
             autoCorrect={false}
             style={styles.inputText}
+            onChangeText={(text) =>
+              setUserInfo({ ...userInfo, firstname: text })
+            }
           />
           <TextInput
-            value={lastname}
+            value={userInfo.lastname}
             autoCorrect={false}
             style={styles.inputText}
+            onChangeText={(text) =>
+              setUserInfo({ ...userInfo, lastname: text })
+            }
           />
           <TextInput
-            value={email}
+            value={userInfo.email}
             autoCorrect={false}
             autoComplete="email"
             keyboardType="email-address"
             style={styles.inputText}
+            onChangeText={(text) => setUserInfo({ ...userInfo, email: text })}
           />
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setEditInfo(false)}
-          >
+          <TouchableOpacity style={styles.button} onPress={handlePress}>
             <Text style={styles.textButton}>Valider</Text>
           </TouchableOpacity>
         </View>
